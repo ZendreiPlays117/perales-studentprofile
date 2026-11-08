@@ -13,7 +13,7 @@ function Student({ name, course, birth }: { name: string; course: string; birth:
 
 function Elementary({ school, year }: {school: string; year: string}) {
   return (
-    <div className="absolute left-auto p-6 rounded-lg bg-gray-200 h-[400px] w-[400px] mt-[20px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
+    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
       <h2 className="text-[40px] font-bold justify-left">{school}</h2>
       <p>{year}</p>
     </div>
@@ -22,16 +22,18 @@ function Elementary({ school, year }: {school: string; year: string}) {
 
 function JuniorHighSchool({ school, year }: {school: string; year: string}) {
   return (
-    <div className="absolute left-[550px] p-6 rounded-lg bg-gray-200 h-[400px] w-[400px] mt-[20px] border-2 border-blue-300 ">
+    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
       <h2 className="text-[40px] font-bold justify-center">{school}</h2>
       <p>{year}</p>
     </div>
   )
 }
 
+
+
 function SeniorHighSchool({ school, year }: {school: string; year: string}) {
   return (
-    <div className="absolute left-[1090px] p-6 rounded-lg bg-gray-200 h-[400px] w-[400px] mt-[20px] border-2 border-blue-300 ">
+    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
       <h2 className="text-[40px] font-bold justify-center">{school}</h2>
       <p>{year}</p>
     </div>
@@ -48,20 +50,25 @@ export default function Home() {
 
       <h1 className=" text-[45px] mt-[20px] font-bold">Education</h1>
 
+      <div className="mt-[20px] flex justify-between">
       <Elementary
       school="Jose L. Porras Elementary School"
-      year = "2018-2019"
+      year = "2018-2019 (Elementary)"
       />
 
       <JuniorHighSchool
       school="Davao Central National High School"
-      year = "2022-2023"
+      year = "2022-2023 (Junior High School)"
       />
 
       <SeniorHighSchool
       school="Davao Chong Hua High School"
-      year = "2024-2025"
+      year = "2024-2025 (Senior High School)"
       />
+      </div>
+
+      <h1 className=" text-[45px] mt-[20px] font-bold">Projects</h1>
+
     </main>
   )
 }
