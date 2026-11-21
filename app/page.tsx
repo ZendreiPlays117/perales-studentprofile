@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 function Student({
   name,
   course,
@@ -49,7 +51,9 @@ function Project1({
   project,
   note,
   description,
+  children,
 }: {
+  children: ReactNode;
   project: string;
   note: string;
   description: string;
@@ -59,6 +63,7 @@ function Project1({
       <h2 className="text-[40px] font-bold justify-left">{project}</h2>
       <p>{note}</p>
       <p>{description}</p>
+      <div className="mt-4">{children}</div>
     </div>
   );
 }
@@ -67,8 +72,9 @@ function Project2({
   project,
   note,
   description,
+  children,
 }: {
-  children: Element;
+  children: ReactNode;
   project: string;
   note: string;
   description: string;
@@ -78,6 +84,7 @@ function Project2({
       <h2 className="text-[40px] font-bold justify-left">{project}</h2>
       <p>{note}</p>
       <p>{description}</p>
+      <div className="mt-4">{children}</div>
     </div>
   );
 }
@@ -112,10 +119,11 @@ export default function Home() {
 
       <h1 className=" text-[45px] mt-[20px] font-bold">Projects</h1>
 
+      <div className="mt-[20px] flex justify-between">
       <Project1
         project="C++ Quiz"
         note="(play it on VSCode or any terminal)"
-        description="Basic knowledge quiz"
+        description="Basic knowledge quiz for CC 102"
       >
         <a
           href="/projects/Trivia Quiz.cpp"
@@ -125,6 +133,22 @@ export default function Home() {
           Try It!
         </a>
       </Project1>
+
+      
+        <Project2
+          project="Trolley Problem Java Edition"
+          note="(play it on VSCode or any terminal)"
+          description="Trolley problem project for CC 103"
+        >
+          <a
+            href="/projects/TrolleyProblemGame.zip"
+            download="TrolleyProblemGame.zip"
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block"
+          >
+            Try It!
+          </a>
+        </Project2>
+      </div>
     </main>
   );
 }
