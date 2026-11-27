@@ -1,3 +1,6 @@
 {
-    "liveServer.port": 3000
+    "liveServer.port": 3000,
+    "files.associations": {
+        "*.css": "tailwindcss"
+    }
 }

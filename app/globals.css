@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
+  --background: #f6f7f9;
+  --foreground: #14171f;
+  --surface: #ffffff;
+  --muted: #5b6475;
+  --line: #d9dde5;
+  --accent: #6674ff;
+  --accent-hover: #5262f0;
+  --accent-border: #3b4bd9;
+  --accent-foreground: #0b0d1a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0d0f14;
+    --foreground: #eceef3;
+    --surface: #151922;
+    --muted: #9aa3b5;
+    --line: #272d3a;
+    --accent: #7d8bff;
+    --accent-hover: #96a2ff;
+    --accent-border: #a2acff;
+    --accent-foreground: #0b0d1a;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-border: var(--accent-border);
+  --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Keeps the page width the same whether or not a scrollbar is showing, so
+   nothing shifts sideways when the profile (which scrolls) appears */
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Uses the Geist font loaded in layout.tsx instead of Arial */
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Profile content moves up into place while the landing screen fades out */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  animation: reveal 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
+}
+
+/* Rotating word on the landing screen */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes word-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-0.5em);
+  }
+}
+
+.word-in {
+  animation: word-in 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.word-out {
+  animation: word-out 350ms ease-in both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-in,
+  .word-out {
+    animation: none;
+  }
 }

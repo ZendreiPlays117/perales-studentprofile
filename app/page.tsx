@@ -1,154 +1,145 @@
-"use client";
-
 import type { ReactNode } from "react";
+import Landing from "./landing";
 
-function Student({
-  name,
-  course,
-  birth,
-}: {
-  name: string;
-  course: string;
-  birth: string;
-}) {
-  return (
-    <div className="border-2 p-4 rounded-lg h-[200px] bg-gray-200">
-      <h2 className="text-xl font-bold">{name}</h2>
-      <p>{course}</p>
-      <p>{birth}</p>
-    </div>
-  );
+type School = { name: string; level: string; years: string };
+type Project = {
+  title: string;
+  description: string;
+  runNote: string;
+  file: string;
+};
+
+const student = {
+  name: "Zendrei Martin Jac A. Perales",
+  course: "Bachelor of Science in Information Technology",
+  birth: "2007-03-02",
+};
+
+const education: School[] = [
+  {
+    level: "Elementary",
+    name: "Jose L. Porras Elementary School",
+    years: "2018–2019",
+  },
+  {
+    level: "Junior High School",
+    name: "Davao Central National High School",
+    years: "2022–2023",
+  },
+  {
+    level: "Senior High School",
+    name: "Davao Chong Hua High School",
+    years: "2024–2025",
+  },
+];
+
+const projects: Project[] = [
+  {
+    title: "C++ Quiz",
+    description: "Basic knowledge quiz for CC 102.",
+    runNote: "Play it in VS Code or any terminal.",
+    file: "/projects/Trivia Quiz.cpp",
+  },
+  {
+    title: "Trolley Problem Java Edition",
+    description: "Trolley problem project for CC 103.",
+    runNote: "Play it in VS Code or any terminal.",
+    file: "/projects/TrolleyProblemGame.zip",
+  },
+];
+
+function formatDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  });
 }
 
-function Elementary({ school, year }: { school: string; year: string }) {
-  return (
-    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
-      <h2 className="text-[40px] font-bold justify-left">{school}</h2>
-      <p>{year}</p>
-    </div>
-  );
-}
-
-function JuniorHighSchool({ school, year }: { school: string; year: string }) {
-  return (
-    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
-      <h2 className="text-[40px] font-bold justify-center">{school}</h2>
-      <p>{year}</p>
-    </div>
-  );
-}
-
-function SeniorHighSchool({ school, year }: { school: string; year: string }) {
-  return (
-    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
-      <h2 className="text-[40px] font-bold justify-center">{school}</h2>
-      <p>{year}</p>
-    </div>
-  );
-}
-
-function Project1({
-  project,
-  note,
-  description,
+function Section({
+  id,
+  title,
   children,
 }: {
+  id: string;
+  title: string;
   children: ReactNode;
-  project: string;
-  note: string;
-  description: string;
 }) {
   return (
-    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
-      <h2 className="text-[40px] font-bold justify-left">{project}</h2>
-      <p>{note}</p>
-      <p>{description}</p>
-      <div className="mt-4">{children}</div>
-    </div>
+    <section aria-labelledby={id} className="mt-14">
+      <h2 id={id} className="text-2xl font-semibold tracking-tight">
+        {title}
+      </h2>
+      <div className="mt-6">{children}</div>
+    </section>
   );
 }
 
-function Project2({
-  project,
-  note,
-  description,
-  children,
-}: {
-  children: ReactNode;
-  project: string;
-  note: string;
-  description: string;
-}) {
+function SchoolItem({ name, level, years }: School) {
   return (
-    <div className="p-6 rounded-lg bg-gray-200 h-[400px] w-[450px] border-2 border-blue-300 hover:bg-gray-400 transition duration-150 delay-150">
-      <h2 className="text-[40px] font-bold justify-left">{project}</h2>
-      <p>{note}</p>
-      <p>{description}</p>
-      <div className="mt-4">{children}</div>
-    </div>
+    <li className="relative pb-8 pl-6 last:pb-0 sm:grid sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6">
+      <span
+        aria-hidden
+        className="absolute top-2 left-[5.5px] size-2.5 rounded-full bg-accent"
+      />
+      <p className="text-muted tabular-nums">{years}</p>
+      <div>
+        <h3 className="text-lg font-semibold">{name}</h3>
+        <p className="text-muted">{level}</p>
+      </div>
+    </li>
+  );
+}
+
+function ProjectItem({ title, description, runNote, file }: Project) {
+  const fileName = file.split("/").pop() ?? file;
+  const extension = fileName.split(".").pop();
+
+  return (
+    <li className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:p-6">
+      <div className="max-w-prose">
+        <h3 className="text-lg font-semibold">{title}</h3>
+        <p className="mt-1">{description}</p>
+        <p className="mt-1 text-sm text-muted">{runNote}</p>
+      </div>
+      <a
+        href={file}
+        download={fileName}
+        className="inline-flex shrink-0 items-center justify-center rounded-lg border border-accent-border bg-accent px-4 py-2.5 font-medium text-accent-foreground transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none"
+      >
+        Download .{extension}
+      </a>
+    </li>
   );
 }
 
 export default function Home() {
   return (
-    <main className="p-8">
-      <Student
-        name="Zendrei Martin Jac A. Perales"
-        course="Bachelor of Science in Information Technology"
-        birth="2007-03-02"
-      />
+    <Landing>
+      <main className="mx-auto w-full max-w-3xl px-5 py-12 sm:px-8 sm:py-20">
+        <header className="border-b border-line pb-10">
+          <h1 className="max-w-2xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl">
+            {student.name}
+          </h1>
+          <p className="mt-6 text-lg">{student.course}</p>
+          <p className="mt-1 text-muted">Born {formatDate(student.birth)}</p>
+        </header>
 
-      <h1 className=" text-[45px] mt-[20px] font-bold">Education</h1>
+        <Section id="education" title="Education">
+          <ol className="border-l border-line">
+            {education.map((school) => (
+              <SchoolItem key={school.name} {...school} />
+            ))}
+          </ol>
+        </Section>
 
-      <div className="mt-[20px] flex justify-between">
-        <Elementary
-          school="Jose L. Porras Elementary School"
-          year="2018-2019 (Elementary)"
-        />
-
-        <JuniorHighSchool
-          school="Davao Central National High School"
-          year="2022-2023 (Junior High School)"
-        />
-
-        <SeniorHighSchool
-          school="Davao Chong Hua High School"
-          year="2024-2025 (Senior High School)"
-        />
-      </div>
-
-      <h1 className=" text-[45px] mt-[20px] font-bold">Projects</h1>
-
-      <div className="mt-[20px] flex justify-between">
-      <Project1
-        project="C++ Quiz"
-        note="(play it on VSCode or any terminal)"
-        description="Basic knowledge quiz for CC 102"
-      >
-        <a
-          href="/projects/Trivia Quiz.cpp"
-          download="Trivia Quiz.cpp"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block"
-        >
-          Try It!
-        </a>
-      </Project1>
-
-      
-        <Project2
-          project="Trolley Problem Java Edition"
-          note="(play it on VSCode or any terminal)"
-          description="Trolley problem project for CC 103"
-        >
-          <a
-            href="/projects/TrolleyProblemGame.zip"
-            download="TrolleyProblemGame.zip"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block"
-          >
-            Try It!
-          </a>
-        </Project2>
-      </div>
-    </main>
+        <Section id="projects" title="Projects">
+          <ul className="divide-y divide-line rounded-xl border border-line bg-surface">
+            {projects.map((project) => (
+              <ProjectItem key={project.title} {...project} />
+            ))}
+          </ul>
+        </Section>
+      </main>
+    </Landing>
   );
 }
